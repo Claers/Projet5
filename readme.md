@@ -105,7 +105,8 @@ db = DataBase("username","password","database","host")
 ```
 
 - Access to a product in database by name or id:
-	If for the name search multiple product are found it will shows the found product list and not the product description, you will have to enter exactly the product name to access to the complete description 
+
+If for the name search multiple product are found it will shows the found product list and not the product description, you will have to enter exactly the product name to access to the complete description 
 	- Command : 
 		```python
 		db.product("name")
@@ -150,6 +151,32 @@ db = DataBase("username","password","database","host")
 		>> Id : 22 | Nom du produit : Belvita Petit déjeuner brut 5 céréales | Marques : Magasins U | Magasins : LU,Mondelez 
 		```
 
+- Get all the categories :
+
+	- Command : 
+	```python
+	db.categorylist()
+	``` 
+	or
+	```python
+	db.categorylist("lastid")
+	``` 
+	or
+	```python
+	db.categorylist("startid","number")
+	``` 
+
+	- Example :
+		```python
+		>> db.categorylist()
+		>> ...ALL THE CATEGORY LIST...
+		>> db.categorylist("2")
+		>> Id : 1 | Categorie : en:meals
+		>> Id : 2 | Categorie :  en:starters
+		>> db.categorylist("20,2")
+		>> Id : 21 | Categorie :  en:durum-wheat-pasta
+		>> Id : 22 | Categorie :  fr:Serpentini
+		```
 
 - Get all the products in a category
 
