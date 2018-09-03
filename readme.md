@@ -107,6 +107,11 @@ db = DataBase("username","password","database","host")
 - Access to a product in database by name or id:
 
 If for the name search multiple product are found it will shows the found product list and not the product description, you will have to enter exactly the product name to access to the complete description 
+
+Put % before to have a response with everything before your word
+Put % after to have a response with everything after your word
+Put % after and before to have a response with everything around your word 
+
 	- Command : 
 		```python
 		db.product("name")
@@ -118,9 +123,20 @@ If for the name search multiple product are found it will shows the found produc
 
 	- Example :
 		```python
-		>> "db.Product("Coca Cola Cherry")"
-		>> Id : 1632 | Nom du produit : Coca Cola Cherry 
-		>> "db.Product("1632")"
+		>> "db.product("Coca Cola Cherry")"
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry | Categorie : Boissons
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry | Categorie : Boissons gazeuses
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry | Categorie : Sodas
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry | Categorie : Sodas au cola
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry | Categorie : Boissons sucrées 
+		>> db.product("Coca Cola")
+		>> Id : 285 | Nom du produit : Coca Cola Light 330ml
+		>> Id : 544 | Nom du produit : Coca Cola Zéro Sucre
+		>> Id : 567 | Nom du produit : Coca cola saveur framboise zéro sucres
+		>> Id : 717 | Nom du produit : Coca Cola
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry
+		>> Id : 1989 | Nom du produit : Coca Cola original taste
+		>> "db.product("1632")"
 		>> Id : 1632 | Nom du produit : Coca Cola Cherry
 		```
 
@@ -178,6 +194,18 @@ If for the name search multiple product are found it will shows the found produc
 		>> Id : 22 | Categorie :  fr:Serpentini
 		```
 
-- Get all the products in a category
+- Get all the products in a category :
 
+Put % before to have a response with everything before your word
+Put % after to have a response with everything after your word
+Put % after and before to have a response with everything around your word 
+
+	- Command : 
+	```python
+	db.product_category("category_name")
+	``` 
+	or
+	```python
+	db.product_category("category_id")
+	``` 
 
