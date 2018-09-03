@@ -104,7 +104,8 @@ For all commands with "db" before the name we assume that we are using a variabl
 db = DataBase("username","password","database","host")
 ```
 
-- Access to a product in database by name : 
+- Access to a product in database by name or id:
+	If for the name search multiple product are found it will shows the found product list and not the product description, you will have to enter exactly the product name to access to the complete description 
 	- Command : 
 		```python
 		db.product("name")
@@ -117,8 +118,39 @@ db = DataBase("username","password","database","host")
 	- Example :
 		```python
 		>> "db.Product("Coca Cola Cherry")"
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry 
+		>> "db.Product("1632")"
 		>> Id : 1632 | Nom du produit : Coca Cola Cherry
 		```
 
+- Get all the products :
+
+	- Command : 
+	```python
+	db.productlist()
+	``` 
+	or
+	```python
+	db.productlist("lastid")
+	``` 
+	or
+	```python
+	db.productlist("startid","number")
+	``` 
+
+	- Example :
+		```python
+		>> db.productlist()
+		>> ...ALL THE PRODUCT LIST...
+		>> db.productlist("2")
+		>> Id : 1 | Nom du produit : Taboulé oriental | Marques : Leclerc, Franprix, Magasins U | Magasins : Bonduelle
+		>> Id : 2 | Nom du produit : Les 3 Minutes, Coudes Rayés | Marques : Carrefour, Magasins U | Magasins : Panzani,Ebro Foods
+		>> db.productlist("20,2")
+		>> Id : 21 | Nom du produit : Sel de Guérande | Marques :  | Magasins : Reflets de France
+		>> Id : 22 | Nom du produit : Belvita Petit déjeuner brut 5 céréales | Marques : Magasins U | Magasins : LU,Mondelez 
+		```
+
+
+- Get all the products in a category
 
 
