@@ -100,9 +100,9 @@ DROP TABLE Products;
 		```
 
 For all commands with "db" before the name we assume that we are using a variable to stock our Database object name "db" :
-	```python
-	db = DataBase("username","password","database","host")
-	```
+```python
+db = DataBase("username","password","database","host")
+```
 
 - Access to a product in database by name : 
 	- Command : 
@@ -120,5 +120,5 @@ For all commands with "db" before the name we assume that we are using a variabl
 		>> Id : 1632 | Nom du produit : Coca Cola Cherry
 		```
 
-- 
+
 
