@@ -24,13 +24,15 @@
     	category : SMALLINT NOT NULL
 
 Table creation command :
-``SQL
+```SQL
+
 CREATE TABLE Categories (
                 categoryid SMALLINT AUTO_INCREMENT NOT NULL,
                 category_name VARCHAR(80) NOT NULL,
                 PRIMARY KEY (categoryid)
 )
 ENGINE=INNODB;
+
 CREATE TABLE Products (
                 productid SMALLINT AUTO_INCREMENT NOT NULL,
                 product_name VARCHAR(80) NOT NULL,
@@ -40,29 +42,33 @@ CREATE TABLE Products (
                 PRIMARY KEY (productid)
 )
 ENGINE=INNODB;
+
 CREATE TABLE product_category (
                 product SMALLINT NOT NULL,
                 category SMALLINT NOT NULL
 )
 ENGINE=INNODB;
+
 ALTER TABLE product_category ADD CONSTRAINT fk_product
 FOREIGN KEY (category)
 REFERENCES Categories (categoryid)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
+
 ALTER TABLE product_category ADD CONSTRAINT fk_category
 FOREIGN KEY (product)
 REFERENCES Products (productid)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
-``
+```
 
 Table destruction command :
-``SQL
+```SQL
 DROP TABLE product_category;
 DROP TABLE Categories;
 DROP TABLE Products;
-``
+
+```
 
 # Features
 
