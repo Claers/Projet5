@@ -109,10 +109,11 @@ db = DataBase("username","password","database","host")
 If for the name search multiple product are found it will shows the found product list and not the product description, you will have to enter exactly the product name to access to the complete description 
 
 Put % before to have a response with everything before your word
-Put % after to have a response with everything after your word
-Put % after and before to have a response with everything around your word 
 
-	- Command : 
+Put % after to have a response with everything after your word
+
+Put % after and before to have a response with everything around your word 
+	- Command :
 		```python
 		db.product("name")
 		```
@@ -120,8 +121,7 @@ Put % after and before to have a response with everything around your word
 		```python
 		db.product("id")
 		```
-
-	- Example :
+    - Example :
 		```python
 		>> "db.product("Coca Cola Cherry")"
 		>> Id : 1632 | Nom du produit : Coca Cola Cherry | Categorie : Boissons
@@ -197,9 +197,10 @@ Put % after and before to have a response with everything around your word
 - Get all the products in a category :
 
 Put % before to have a response with everything before your word
-Put % after to have a response with everything after your word
-Put % after and before to have a response with everything around your word 
 
+Put % after to have a response with everything after your word
+
+Put % after and before to have a response with everything around your word 
 	- Command : 
 	```python
 	db.product_category("category_name")
