@@ -96,28 +96,28 @@ DROP TABLE Products;
 
 	- Command :
 		```python
-			DataBase("username","password","database","host")
+		DataBase("username","password","database","host")
 		```
 
 For all commands with "db" before the name we assume that we are using a variable to stock our Database object name "db" :
 	```python
-		db = DataBase("username","password","database","host")
+	db = DataBase("username","password","database","host")
 	```
 
 - Access to a product in database by name : 
 	- Command : 
 		```python
-			db.product("name")
+		db.product("name")
 		```
 		or
 		```python
-			db.product("id")
+		db.product("id")
 		```
 
 	- Example :
 		```python
-			>> "db.Product("Coca Cola Cherry")"
-			>> Id : 1632 | Nom du produit : Coca Cola Cherry
+		>> "db.Product("Coca Cola Cherry")"
+		>> Id : 1632 | Nom du produit : Coca Cola Cherry
 		```
 
 - 
