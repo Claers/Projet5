@@ -210,3 +210,23 @@ Put % after and before to have a response with everything around your word
 	db.product_category("category_id")
 	``` 
 
+- Register a product in the favorite table :
+	
+	- Command :
+	```python
+	db.add_favorite("productid")
+	```
+
+- Show the favorite table :
+	
+	- Command :
+	```python
+	db.show_favorites()
+	```
+
+- Remove a product in the favorite table :
+	
+	- Command :
+	```python
+	db.remove_favorite("productid")
+	```
