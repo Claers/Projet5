@@ -126,3 +126,37 @@ class DataBase():
             print(args)
             print("Correct syntax : productlist() or productlist(lastid)")
             return "Error"
+
+    def categorylist(self, *args):
+        try:
+            if(len(args) == 0):
+                with self.connection.cursor() as cursor:
+                    sql = "SELECT DISTINCT categoryid,category_name FROM Categories"
+                    cursor.execute(sql, (args))
+                    self.categorylistsql = cursor.fetchall()
+                    for category in self.categorylistsql:
+                        print("Id : " + str(category['categoryid']) +
+                              " | Categorie : " + str(category['category_name']))
+                    return self.categorylistsql
+            elif(type(*args) is int):
+                if(len(args) == 1):
+                    with self.connection.cursor() as cursor:
+                        sql = "SELECT DISTINCT categoryid,category_name FROM Categories LIMIT %s"
+                        cursor.execute(sql, (args))
+                        self.categorylistsql = cursor.fetchall()
+                        for category in self.categorylistsql:
+                            print(
+                                "Id : " + str(category['categoryid']) + " | Categorie : " + str(category['category_name']))
+                        return self.categorylistsql
+                elif(len(args) >= 2):
+                    raise Exception
+            elif(type(*args) is not int):
+                raise TypeError
+
+        except TypeError:
+            print(
+                "Bad type argument or too much arguments. Only non-decimal number accepted. Arguments passed :")
+            print(args)
+            print("Correct syntax : categorylist() or categorylist(lastid)")
+            return "Error"
+
