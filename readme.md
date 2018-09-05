@@ -8,22 +8,26 @@
 
 # Table Structure
 
-	## Categories
+## Categories
+
 		categoryid : SMALLINT AUTO_INCREMENT NOT NULL 
 		category_name : VARCHAR(80) NOT NULL
 
-	## Products
+## Products
+
 		productid : SMALLINT AUTO_INCREMENT NOT NULL
 		product_name : TEXT NOT NULL
 		shops : TEXT NOT NULL
         brands : TEXT NOT NULL
         product_url : TEXT NOT NULL
 
-    ## product_category
+## product_category
+ 
     	product : SMALLINT NOT NULL
     	category : SMALLINT NOT NULL
 
-    ## favorites
+## favorites
+
     	favorite : SMALLINT NOT NULL
 
 
@@ -103,7 +107,7 @@ DROP TABLE Products;
 All the commands here are accessible in the file : DataBaseOperations.py
 All the responses will be in French !
 
-##Database
+## Database
 
 - Add to database the OpenFoodFact api responses (Only in a standalone file : OpenFoodFactToDBB.py)
 
@@ -111,7 +115,7 @@ All the responses will be in French !
 
 	- Command :
 ```python
-		DataBase("username","password","database","host")
+DataBase("username","password","database","host")
 ```
 
 For all commands with "db" before the name we assume that we are using a variable to stock our Database object name "db" :
@@ -119,7 +123,7 @@ For all commands with "db" before the name we assume that we are using a variabl
 db = DataBase("username","password","database","host")
 ```
 
-##Products : 
+## Products : 
 - Access to a product in database by name or id:
 
 If for the name search multiple product are found it will shows the found product list and not the product description, you will have to enter exactly the product name to access to the complete description 
@@ -129,8 +133,8 @@ Put % before to have a response with everything before your word
 Put % after to have a response with everything after your word
 
 Put % after and before to have a response with everything around your word 
-	
-	- Command :
+
+- Command :
 
 ```python
 		db.product("name")
@@ -140,68 +144,64 @@ Put % after and before to have a response with everything around your word
 		db.product(id)
 ```
 
-    - Example :
+- Example :
 ```python
-		>> "db.product("Coca-Cola")"
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Carbonated drinks | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sugared beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons gazeuses | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons sucrées | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas au cola | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> db.product("Coca%")
-		>> Id : 9 | Nom du produit : Coca-Cola | Nutriscore : e
-		>> Id : 35 | Nom du produit : Coca Cola Light | Nutriscore : b
-		>> Id : 74 | Nom du produit : Coca Cola | Nutriscore : e
-		>> Id : 799 | Nom du produit : Coca Cola Light 330ml | Nutriscore : b
-		>> Id : 1027 | Nom du produit : Coca Cola Zéro Sucre | Nutriscore : b
-		>> Id : 1049 | Nom du produit : Coca cola saveur framboise zéro sucres | Nutriscore : b
-		>> "db.product(9)"
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Carbonated drinks | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sugared beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons gazeuses | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons sucrées | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
-		>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas au cola | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> "db.product("Coca-Cola")"
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Carbonated drinks | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sugared beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons gazeuses | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons sucrées | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas au cola | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> db.product("Coca%")
+>> Id : 9 | Nom du produit : Coca-Cola | Nutriscore : e
+>> Id : 35 | Nom du produit : Coca Cola Light | Nutriscore : b
+>> Id : 74 | Nom du produit : Coca Cola | Nutriscore : e
+>> Id : 799 | Nom du produit : Coca Cola Light 330ml | Nutriscore : b
+>> Id : 1027 | Nom du produit : Coca Cola Zéro Sucre | Nutriscore : b
+>> Id : 1049 | Nom du produit : Coca cola saveur framboise zéro sucres | Nutriscore : b
+>> "db.product(9)"
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Carbonated drinks | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sugared beverages | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons gazeuses | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Boissons sucrées | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
+>> Id : 9 | Nom du produit : Coca-Cola | Catégorie : Sodas au cola | Marques :  | Magasins : Coca-Cola | Url : https://world.openfoodfacts.org/product/5449000000996/coca-cola | Nutriscore : e
 ```
 
 - Get all the products :
-
 	- Command : 
 ```python
-	db.productlist()
+db.productlist()
 ``` 
-	or
+or
 ```python
-	db.productlist(lastid)
+db.productlist(lastid)
 ``` 
-
-	- Example :
+- Example :
 ```python
-		>> db.productlist()
-		>> ...ALL THE PRODUCT LIST...
-		>> db.productlist(2)
-		>> Id : 1 | Nom du produit : 16 galettes au Beurre | Marques : Leclerc | Magasins : €co+,Eco+ | Nutriscore : e
-		>> Id : 2 | Nom du produit : Riz Curcuma Gingembre | Marques : Franprix | Magasins : Alaya,Beendhi | Nutriscore : b
+>> db.productlist()
+>> ...ALL THE PRODUCT LIST...
+>> db.productlist(2)
+>> Id : 1 | Nom du produit : 16 galettes au Beurre | Marques : Leclerc | Magasins : €co+,Eco+ | Nutriscore : e
+>> Id : 2 | Nom du produit : Riz Curcuma Gingembre | Marques : Franprix | Magasins : Alaya,Beendhi | Nutriscore : b
 ```
 
-##Categories : 
+## Categories : 
 - Get all the categories :
-
 	- Command : 
 ```python
 	db.categorylist()
 ``` 
-	or
+or
 ```python
 	db.categorylist(lastid)
 ```
-
-	- Example :
+- Example :
 ```python
 		>> db.categorylist()
 		>> ...ALL THE CATEGORY LIST...
@@ -217,12 +217,12 @@ Put % before to have a response with everything before your word
 Put % after to have a response with everything after your word
 
 Put % after and before to have a response with everything around your word 
-	
-	- Command : 
+
+- Command : 
 ```python
 	db.product_category("category_name")
 ``` 
-	or
+or
 ```python
 	db.product_category(category_id)
 ``` 
@@ -235,17 +235,16 @@ Put % after to have a response with everything after your word
 
 Put % after and before to have a response with everything around your word 
 	
-	- Command :
+- Command :
 
 ```python
 		db.category("name")
 ```
-		or
+or
 ```python
 		db.category(id)
 ```
-
-    - Example :
+- Example :
 ```python
 		>> "db.category("Coca-Cola")"
 		>> Id : 96 | Nom de la catégorie : Viandes
@@ -264,22 +263,18 @@ Put % after and before to have a response with everything around your word
 		>> Id : 2 | Nom de la catégorie : Biscuits et gâteaux
 ```
 
-##Favorites :
+## Favorites :
 - Register a product in the favorite table :
-	
 	- Command :
 ```python
 	db.add_favorite(productid,substituteid)
 ```
-
 - Show the favorite table :
-	
 	- Command :
 ```python
 	db.show_favorites()
 ```
-	
-	- Example :
+- Example :
 ```python
 	>> db.show_favorites()
 	>> Id du Favori : 1 | Id du Produit : 25 | Nom du produit : Moutarde de Dijon au Cassis | Produit substitué : 49 | Nom du produit substitué : Moutarde au yuzu
@@ -302,7 +297,7 @@ Put % after and before to have a response with everything around your word
 	db.remove_favorite(productid,substituteid)
 ```
 
-#Program
+# Program
 
 To launch the program use program.py. 
 The program is redacted in French ! 
