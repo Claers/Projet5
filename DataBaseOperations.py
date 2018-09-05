@@ -64,3 +64,33 @@ class DataBase():
             print(args)
             print("Correct syntax : product(\"name\") or product(id)")
             return "Error"
+
+    def category(self, *args):
+        try:
+            if(len(args) < 2):
+                with self.connection.cursor() as cursor:
+                    if(type(*args) is int):
+                        sql = "SELECT DISTINCT categoryid, category_name FROM Categories WHERE categoryid LIKE %s;"
+                        cursor.execute(sql, (args))
+                        self.categorysql = cursor.fetchall()
+                        for category in self.categorysql:
+                            print("Id : " + str(category['categoryid']) + " | Nom de la catégorie : " + str(category['category_name']))
+                        return self.categorysql
+                    elif(type(*args) is str):
+                        sql = "SELECT DISTINCT categoryid, category_name FROM Categories WHERE category_name LIKE %s;"
+                        cursor.execute(sql, (str(*args)))
+                        self.categorysql = cursor.fetchall()
+                        for category in self.categorysql:
+                                print("Id : " + str(category['categoryid']) + " | Nom de la catégorie : " + str(category['category_name']))
+                        return self.categorysql
+                    elif(type(*args) is not int and type(*args) is not str):
+                        raise TypeError
+            elif(len(args) >= 2):
+                raise TypeError
+
+        except TypeError:
+            print("Bad type argument or too much arguments, only one is accepted. Only non-decimal number accepted or text. Arguments passed :")
+            print(args)
+            print("Correct syntax : product(\"name\") or product(id)")
+            return "Error"
+
