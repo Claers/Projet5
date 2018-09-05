@@ -200,3 +200,8 @@ class DataBase():
                     self.connection.commit()
                 elif(type(productid) is not int):
                     raise TypeError
+
+        except TypeError:
+            print("Bad type argument or too much arguments, only one is accepted. Only non-decimal number accepted. Arguments passed :")
+            print(productid)
+            print("Correct syntax : add_favorite(id)")
