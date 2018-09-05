@@ -94,3 +94,35 @@ class DataBase():
             print("Correct syntax : product(\"name\") or product(id)")
             return "Error"
 
+    def productlist(self, *args):
+        try:
+            if(len(args) == 0):
+                with self.connection.cursor() as cursor:
+                    sql = "SELECT DISTINCT productid,product_name,brands,shops,nutriscore FROM Products"
+                    cursor.execute(sql, (args))
+                    self.productlistsql = cursor.fetchall()
+                    for product in self.productlistsql:
+                        print("Id : " + str(product['productid']) + " | Nom du produit : " + str(product[
+                              'product_name']) + " | Marques : " + str(product['brands']) + " | Magasins : " + str(product['shops']) + " | Nutriscore : " + str(product['nutriscore']))
+                    return self.productlistsql
+            elif(type(*args) is int):
+                if(len(args) == 1):
+                    with self.connection.cursor() as cursor:
+                        sql = "SELECT DISTINCT productid,product_name,brands,shops,nutriscore FROM Products LIMIT %s"
+                        cursor.execute(sql, (args))
+                        self.productlistsql = cursor.fetchall()
+                        for product in self.productlistsql:
+                            print("Id : " + str(product['productid']) + " | Nom du produit : " + str(product[
+                                  'product_name']) + " | Marques : " + str(product['brands']) + " | Magasins : " + str(product['shops']) + " | Nutriscore : " + str(product['nutriscore']))
+                        return self.productlistsql
+                elif(len(args) >= 2):
+                    raise TypeError
+            elif(type(*args) is not int):
+                raise TypeError
+
+        except TypeError:
+            print(
+                "Bad type argument or too much arguments. Only non-decimal number accepted. Arguments passed :")
+            print(args)
+            print("Correct syntax : productlist() or productlist(lastid)")
+            return "Error"
