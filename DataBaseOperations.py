@@ -190,3 +190,13 @@ class DataBase():
             print(args)
             print("Correct syntax : product_category(\"name\") or product_category(id)")
             return "Error"
+
+    def add_favorite(self, productid,substituteid):
+        try:
+            with self.connection.cursor() as cursor:
+                if(type(productid) is int):
+                    sql = "INSERT INTO Favorites (favorite,productsubid) SELECT %s,%s WHERE NOT EXISTS(SELECT * FROM Favorites WHERE favorite = %s AND productsubid = %s)"
+                    cursor.execute(sql, (productid,substituteid, productid,substituteid))
+                    self.connection.commit()
+                elif(type(productid) is not int):
+                    raise TypeError
