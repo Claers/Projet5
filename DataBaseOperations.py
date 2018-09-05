@@ -238,3 +238,20 @@ class DataBase():
             print("Bad type argument or too much arguments, only one is accepted. Only non-decimal number accepted. Arguments passed :")
             print(productid)
             print("Correct syntax : remove_favorite(id)")
+
+
+    def substitute(self,category,productid):
+        with self.connection.cursor() as cursor:
+            sql = "SELECT DISTINCT productid,product_name,category_name,categoryid,brands,shops,product_url,nutriscore FROM (SELECT Products.*, Categories.* FROM product_category INNER JOIN Products ON Products.productid = product_category.product INNER JOIN Categories ON Categories.categoryid = product_category.category) AS ProductDesc WHERE categoryid LIKE %s ORDER BY nutriscore ASC,categoryid DESC LIMIT 1;"
+            cursor.execute(sql,(category) )
+            self.substitutesql = cursor.fetchall()
+            self.substitutesql = self.substitutesql[0]
+            if(productid == self.substitutesql['productid']):
+                return "Best"
+            else:
+                print("\nSubstitut trouvé : Id : " + str(self.substitutesql['productid']) + " | Nom du produit : " + str(
+                                self.substitutesql['product_name']) + " | Catégorie : " + str(self.substitutesql['category_name']) + " | Marques : " + str(self.substitutesql['brands'])+ " | Magasins : " + str(self.substitutesql['shops']) + " | Url : " + str(self.substitutesql['product_url']) + " | Nutriscore : " + str(self.substitutesql['nutriscore']))
+                return self.substitutesql
+
+
+
