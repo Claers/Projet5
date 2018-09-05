@@ -160,3 +160,33 @@ class DataBase():
             print("Correct syntax : categorylist() or categorylist(lastid)")
             return "Error"
 
+    def product_category(self, *args):
+        try:
+            if(len(args) < 2):
+                with self.connection.cursor() as cursor:
+                    if(type(*args) is int):
+                        sql = "SELECT DISTINCT productid, product_name,category_name,nutriscore FROM (SELECT Products.*, Categories.* FROM product_category INNER JOIN Products ON Products.productid = product_category.product INNER JOIN Categories ON Categories.categoryid = product_category.category) AS ProductDesc WHERE categoryid LIKE %s;"
+                        cursor.execute(sql, (args))
+                        self.productsql = cursor.fetchall()
+                        for product in self.productsql:
+                            print("Id : " + str(product['productid']) + " | Nom du produit : " + str(
+                                product['product_name']) + " | Catégorie : " + str(product['category_name']) + " | Nutriscore : " + str(product['nutriscore']) )
+                        return self.productsql
+                    elif(type(*args) is str):
+                        sql = "SELECT DISTINCT productid, product_name,category_name FROM (SELECT Products.*, Categories.* FROM product_category INNER JOIN Products ON Products.productid = product_category.product INNER JOIN Categories ON Categories.categoryid = product_category.category) AS ProductDesc WHERE category_name LIKE %s;"
+                        cursor.execute(sql, (str(*args)))
+                        self.productsql = cursor.fetchall()
+                        for product in self.productsql:
+                            print("Id : " + str(product['productid']) + " | Nom du produit : " + str(
+                                product['product_name']) + " | Catégorie : " + str(product['category_name']))
+                        return self.productsql
+                    elif(type(*args) is not int and type(*args) is not str):
+                        raise TypeError
+            elif(len(args) >= 2):
+                raise TypeError
+
+        except TypeError:
+            print("Bad type argument or too much arguments. Only non-decimal number accepted or text. Arguments passed :")
+            print(args)
+            print("Correct syntax : product_category(\"name\") or product_category(id)")
+            return "Error"
