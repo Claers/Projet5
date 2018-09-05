@@ -222,3 +222,19 @@ class DataBase():
             	substituteproduct = substituteproduct[0]
             	print("Id du Favori : " + str(favorite['favoriteid']) + " | Id du Produit : " + str(favorite['favorite']) + " | Nom du produit : " + str(product['product_name'])  + " | Produit substitué : " + str(favorite['productsubid']) + " | Nom du produit substitué : " + str(substituteproduct['product_name']) + "\n")
             return self.favoritesql
+
+
+    def remove_favorite(self, favoriteid):
+        try:
+            with self.connection.cursor() as cursor:
+                if(type(favoriteid) is int):
+                    sql = "DELETE FROM Favorites WHERE favoriteid = %s"
+                    cursor.execute(sql, (favoriteid))
+                    self.connection.commit()
+                elif(type(favoriteid) is not int):
+                    raise TypeError
+
+        except TypeError:
+            print("Bad type argument or too much arguments, only one is accepted. Only non-decimal number accepted. Arguments passed :")
+            print(productid)
+            print("Correct syntax : remove_favorite(id)")
