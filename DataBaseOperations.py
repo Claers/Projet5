@@ -205,3 +205,20 @@ class DataBase():
             print("Bad type argument or too much arguments, only one is accepted. Only non-decimal number accepted. Arguments passed :")
             print(productid)
             print("Correct syntax : add_favorite(id)")
+
+    def show_favorites(self):
+        with self.connection.cursor() as cursor:
+            sql = "SELECT * FROM Favorites;"
+            cursor.execute(sql)
+            self.favoritesql = cursor.fetchall()
+            for favorite in self.favoritesql:
+            	sql = "SELECT DISTINCT productid, product_name,category_name,brands,shops,product_url,nutriscore FROM (SELECT Products.*, Categories.* FROM product_category INNER JOIN Products ON Products.productid = product_category.product INNER JOIN Categories ON Categories.categoryid = product_category.category) AS ProductDesc WHERE productid LIKE %s;"
+            	cursor.execute(sql,(favorite['favorite']))
+            	product = cursor.fetchall()
+            	product = product[0]
+            	sql = "SELECT DISTINCT productid, product_name,category_name,brands,shops,product_url,nutriscore FROM (SELECT Products.*, Categories.* FROM product_category INNER JOIN Products ON Products.productid = product_category.product INNER JOIN Categories ON Categories.categoryid = product_category.category) AS ProductDesc WHERE productid LIKE %s;"
+            	cursor.execute(sql,(favorite['productsubid']))
+            	substituteproduct = cursor.fetchall()
+            	substituteproduct = substituteproduct[0]
+            	print("Id du Favori : " + str(favorite['favoriteid']) + " | Id du Produit : " + str(favorite['favorite']) + " | Nom du produit : " + str(product['product_name'])  + " | Produit substitué : " + str(favorite['productsubid']) + " | Nom du produit substitué : " + str(substituteproduct['product_name']) + "\n")
+            return self.favoritesql
