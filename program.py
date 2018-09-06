@@ -1,5 +1,6 @@
 from DataBaseOperations import DataBase
 
+
 class App():
 
     def __init__(self):
@@ -37,7 +38,9 @@ class App():
             # Replace a product by finding a substitute
             elif(self.choice == 1):
                 if(self.categorychoice == 0):
-                    if(self.categorylistmem == ""):  # If the category list registred in memory is empty use the categorylist command
+                    # If the category list registred in memory is empty use the
+                    # categorylist command
+                    if(self.categorylistmem == ""):
                         self.categorylistmem = self.db.categorylist()
                     if(self.categorylistmem == "Error"):
                         print("Une Erreur dans le programme a été rencontrée")
@@ -48,90 +51,138 @@ class App():
                 elif(self.categorychoice != -1):
                     if(self.productchoice == 0):
                         for category in self.categorylistmem:
-                            if(self.categorychoice == category['categoryid']): # If the category id enter by the user is in the list and exist
-                                self.productlistmem = self.db.product_category(self.categorychoice)
+                            # If the category id enter by the user is in the
+                            # list and exist
+                            if(self.categorychoice == category['categoryid']):
+                                self.productlistmem = self.db.product_category(
+                                    self.categorychoice)
                                 self.categoryfound = True
-                                self.productchoice = int(input("\nVeillez choisir un produit dans la liste précédente et entrez ici le chiffre correspondant : "))
-                        if(self.categoryfound == False): # If the category id enter by the user is not the list
-                            print("\nLe chiffre entré ne correspond à aucune des catégories. Merci d'entrer un nouveau chiffre.")
+                                self.productchoice = int(input(
+                                    "\nVeillez choisir un produit dans la liste précédente et entrez ici le chiffre correspondant : "))
+                        # If the category id enter by the user is not the list
+                        if(self.categoryfound == False):
+                            print(
+                                "\nLe chiffre entré ne correspond à aucune des catégories. Merci d'entrer un nouveau chiffre.")
                             self.categorychoice = int(input(
-                            "\nVeuillez choisir une catégorie dans la liste précédente et entrez ici le chiffre correspondant : "))
+                                "\nVeuillez choisir une catégorie dans la liste précédente et entrez ici le chiffre correspondant : "))
                     else:
                         if(self.productfound == False):
                             for product in self.productlistmem:
-                                if(self.productchoice == product['productid']): # If the product id enter by the user is in the list and exist
+                                # If the product id enter by the user is in the
+                                # list and exist
+                                if(self.productchoice == product['productid']):
                                     self.productfound = True
-                            if(self.productfound == False): # If the product id enter by the user is not the list
-                                print("\nLe chiffre entré ne correspond à aucun des produits. Merci d'entrer un nouveau chiffre.")
-                                self.productchoice = int(input("\nVeillez choisir un produit dans la liste précédente et entrez ici le chiffre correspondant : "))
+                            # If the product id enter by the user is not the
+                            # list
+                            if(self.productfound == False):
+                                print(
+                                    "\nLe chiffre entré ne correspond à aucun des produits. Merci d'entrer un nouveau chiffre.")
+                                self.productchoice = int(input(
+                                    "\nVeillez choisir un produit dans la liste précédente et entrez ici le chiffre correspondant : "))
                         else:
-                            self.productsubstitute = self.db.substitute(self.categorychoice, self.productchoice)
-                            if(self.productsubstitute == "Best"): # If the substitute found is already the product selected
-                                print("Ce produit est déja le meilleur de sa catégorie. Souhaitez vous enregistrer ce produit dans vos favoris ?")
-                                self.productsubstitute = self.productchoice
-                                register = int(input("1 - Oui / 2 - Non : "))
-                                if(register == 1):
-                                    self.db.add_favorite(self.productchoice,self.productchoice)
-                                    print("Produit enregistré, retour au menu")
-                                    self.AppReset()
-                                elif(register ==2):
-                                    print("Produit non enregistré, retour au menu")
-                                    self.AppReset()
-                                else:
-                                    print("Choix Incorrect")
-                                    register = 0
-                            else: # If the substitute found is not the same product
-                                print("\nVoulez vous enregistrer ce substitut dans vos favoris ?\n")
-                                register = int(input("1 - Oui / 2 - Non : "))
-                                if(register == 1):
-                                    self.db.add_favorite(self.productsubstitute['productid'],self.productchoice)
-                                    print("Produit enregistré, retour au menu")
-                                    self.AppReset()
-                                elif(register ==2):
-                                    print("Produit non enregistré, retour au menu")
-                                    self.AppReset()
-                                else:
-                                    print("Choix Incorrect")
-                                    register = 0
-                else: # If the user type -1 in the category choice, he can make a search by word 
-                    categorysearch =  str(input("\nEntrez le nom d'une catégorie ou entourez un mot-clé avec \%\"mot-clé\"\% : "))
+                            self.productsubstitute = self.db.substitute(
+                                self.categorychoice, self.productchoice)
+                            favorites = self.db.show_favorites()
+                            exist = False
+                            for favorite in favorites:
+                                # If the substitue and the product exist
+                                # already in the favorite list
+                                if(self.productchoice == favorite['productsubid']) and (self.productsubstitute['productid'] == favorite['favorite']):
+                                    exist = True
+                            if(exist):
+                                print(
+                                    "\n Ce produit existe deja dans la liste des favoris. Retour au menu.")
+                                self.AppReset()
+                            else:
+                                # If the substitute found is already the
+                                # product selected
+                                if(self.productsubstitute == "Best"):
+                                    print(
+                                        "Ce produit est déja le meilleur de sa catégorie. Souhaitez vous enregistrer ce produit dans vos favoris ?")
+                                    self.productsubstitute = self.productchoice
+                                    register = int(
+                                        input("1 - Oui / 2 - Non : "))
+                                    if(register == 1):
+                                        self.db.add_favorite(
+                                            self.productchoice, self.productchoice)
+                                        print(
+                                            "Produit enregistré, retour au menu")
+                                        self.AppReset()
+                                    elif(register == 2):
+                                        print(
+                                            "Produit non enregistré, retour au menu")
+                                        self.AppReset()
+                                    else:
+                                        print("Choix Incorrect")
+                                        register = 0
+                                else:  # If the substitute found is not the same product
+                                    print(
+                                        "\nVoulez vous enregistrer ce substitut dans vos favoris ?\n")
+                                    register = int(
+                                        input("1 - Oui / 2 - Non : "))
+                                    if(register == 1):
+                                        self.db.add_favorite(self.productsubstitute[
+                                                             'productid'], self.productchoice)
+                                        print(
+                                            "Produit enregistré, retour au menu")
+                                        self.AppReset()
+                                    elif(register == 2):
+                                        print(
+                                            "Produit non enregistré, retour au menu")
+                                        self.AppReset()
+                                    else:
+                                        print("Choix Incorrect")
+                                        register = 0
+                else:  # If the user type -1 in the category choice, he can make a search by word
+                    categorysearch = str(input(
+                        "\nEntrez le nom d'une catégorie ou entourez un mot-clé avec \%\"mot-clé\"\% : "))
                     self.db.category(categorysearch)
-                    self.categorychoice = 0 
-
+                    self.categorychoice = 0
 
             # Show the list of favorites
             elif(self.choice == 2):
-                if(self.favoritemem == ""):  # If the favorite list registred in memory is empty use the show_favorite command
+                # If the favorite list registred in memory is empty use the
+                # show_favorite command
+                if(self.favoritemem == ""):
                     self.favoritemem = self.db.show_favorites()
                 if (self.favoritechoice == 0):
-                    self.favoritechoice = int(input("Veuillez choisir un favori dans la liste précédente et entrez ici le chiffre correspondant (-1 pour passer en mode supprimer) : "))
+                    self.favoritechoice = int(input(
+                        "Veuillez choisir un favori dans la liste précédente et entrez ici le chiffre correspondant (-1 pour passer en mode supprimer) : "))
                 elif (self.favoritechoice != -1):
                     if(self.favoritefound == False):
                         for favorite in self.favoritemem:
                             if (self.favoritechoice == favorite['favoriteid']):
                                 self.favoritefound = True
                         if (self.favoritefound == False):
-                            print("\n Le chiffre entré ne correspond à aucun des favoris. Merci d'entrer un nouveau chiffre")
+                            print(
+                                "\n Le chiffre entré ne correspond à aucun des favoris. Merci d'entrer un nouveau chiffre")
                             self.favoritechoice = 0
                     else:
                         print("\n Substitut : \n")
-                        self.db.product(self.favoritemem[self.favoritechoice-1]['favorite']) 
+                        self.db.product(self.favoritemem[
+                                        self.favoritechoice - 1]['favorite'])
                         print("\n Produit substitué : \n")
-                        self.db.product(self.favoritemem[self.favoritechoice-1]['productsubid']) 
-                else: # If the user type -1 in the favorite choice, the program enter in the delete mode 
-                    delfav = int(input("\n ATTENTION MODE SUPPRIMER ACTIVÉ. Veuillez choisir un favori dans la liste precedente pour le supprimer des favoris. Attention cette action est irréversible : "))
-                    delfound = False
-                    for favorite in self.favoritemem:
-                            if (delfav == favorite['favoriteid']):
-                                delfound = True
-                    if (delfound == False):
-                        print("\n Le chiffre entré ne correspond à aucun des favoris. Merci d'entrer un nouveau chiffre")
-                    else:
-                        self.db.remove_favorite(delfav)
-                        print("\nFavori n°" + str(delfav)+ " supprimé. Retour en mode normal")
+                        self.db.product(self.favoritemem[
+                                        self.favoritechoice - 1]['productsubid'])
+                        print("\n")
                         self.favoritechoice = 0
                         self.favoritemem = ""
-
+                else:  # If the user type -1 in the favorite choice, the program enter in the delete mode
+                    delfav = int(input(
+                        "\n ATTENTION MODE SUPPRIMER ACTIVÉ. Veuillez choisir un favori dans la liste precedente pour le supprimer des favoris. Attention cette action est irréversible : "))
+                    delfound = False
+                    for favorite in self.favoritemem:
+                        if (delfav == favorite['favoriteid']):
+                            delfound = True
+                    if (delfound == False):
+                        print(
+                            "\n Le chiffre entré ne correspond à aucun des favoris. Merci d'entrer un nouveau chiffre")
+                    else:
+                        self.db.remove_favorite(delfav)
+                        print("\nFavori n°" + str(delfav) +
+                              " supprimé. Retour en mode normal")
+                        self.favoritechoice = 0
+                        self.favoritemem = ""
 
             # Quit the programm
             elif(self.choice == 3):
@@ -141,8 +192,6 @@ class App():
             elif(self.choice > 3):
                 print("Choix incorrect\n")
                 self.choice = 0
-
-
 
     # A class to reset the app variable
     def AppReset(self):
@@ -155,7 +204,6 @@ class App():
         self.categoryfound = False
         self.productfound = False
         self.favoritefound = False
-
 
     def CloseApp(self):
         self.running = False
