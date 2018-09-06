@@ -270,9 +270,10 @@ or
 	db.add_favorite(productid,substituteid)
 ```
 - Show the favorite table :
+User can tell if he want to print (True) or not the list (False)
 	- Command :
 ```python
-	db.show_favorites()
+	db.show_favorites(boolprint)
 ```
 - Example :
 ```python

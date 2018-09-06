@@ -82,7 +82,7 @@ class App():
                         else:
                             self.productsubstitute = self.db.substitute(
                                 self.categorychoice, self.productchoice)
-                            favorites = self.db.show_favorites()
+                            favorites = self.db.show_favorites(False)
                             exist = False
                             for favorite in favorites:
                                 # If the substitue and the product exist
@@ -144,7 +144,7 @@ class App():
                 # If the favorite list registred in memory is empty use the
                 # show_favorite command
                 if(self.favoritemem == ""):
-                    self.favoritemem = self.db.show_favorites()
+                    self.favoritemem = self.db.show_favorites(True)
                 if (self.favoritechoice == 0):
                     self.favoritechoice = int(input(
                         "Veuillez choisir un favori dans la liste précédente et entrez ici le chiffre correspondant (-1 pour passer en mode supprimer) : "))
